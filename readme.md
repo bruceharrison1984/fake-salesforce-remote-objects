@@ -63,10 +63,39 @@ Object names are derived in the following ways:
 - The `jsShorthand` name for `apex:remoteObjectModel` can be explicitly defined in the DOM element, or it is automatically derived from the `name` attribute
   - Automatically derived shorthand names are simply `js prefixed to the name` attribute (Contact -> jsContact)
 
-## Object functions
-- get
-  - If the value was initialized during construction (`sfRemoteObject.jsContact({ someField: 'test'})`), it will be echo'd upon get
-  - If the value was not initalized, it will return an empty string ('')
-  - If the field *was not* declared in the apex:remoteObjectModel DOM element, an error message will be printed in the console but your code will still be allowed to run. The return value will also make note of this error.
+## Fake fields
+**These fields are not part of the Salesforce spec, and they should not be referenced directly in your code.** 
 
-**More functions will be added as necessary**
+These fields are added to any fake objects created. They simply exist to make local development easier and help you keep track of objects.
+
+- `_sfObjectType`
+  - The Salesforce Object Type declared in the apex:remoteObjectModel
+- `_controllerName`
+  - The name of the function that created this object
+- `_fakeCount`
+  - When doing a query or retrieval, this field keeps count of the returned objects
+
+## Fake Object functions
+This list contains the fuctions that have been **faked** from the Salesforce Remote Object API. It probably won't ever contain all of the possible functions, just the most frequently used ones. Console messages are used extensively so you can follow your API calls during development.
+
+- `constructor({ field: 'value', field2: 'value'})`
+  - Any fields passed in to the constructor will be assigned to the created object
+  - Any retrievals from this object will return an array of *n* clones of this object
+- `get("FieldName")`
+  - If the value was initialized during construction
+    - The value will be returned
+  - If the value was set in code
+    - The value will be returned
+  - If the value was not initalized
+    - it will return an empty string ('')
+  - If the field *was not* declared in the apex:remoteObjectModel DOM element
+    - an error message will be printed in the console but your code will still be allowed to run
+    - The return value will also make note of this error.
+- `retrieve({ limit: 100}, callback(err, results))`
+  - A number of objects equal to the limit passed in are returned
+    - These objects are direct copies of the initalized object
+    - object have a _fakeCount field attached to them for identification
+    - limits > 100 will display an error message, but your code will run normally
+      - Salesforce doesn't allow more than 100 results at a time
+
+**More functions will be added as necessary, pull requests are welcome!**
