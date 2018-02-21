@@ -1,7 +1,7 @@
 import logger from './logger';
 
 class remoteObject {
-  constructor(predefinedObject = {}, sfObjectType, controllerName, definedFields) {
+  constructor(predefinedObject = {}, sfObjectType, controllerName, definedFields = []) {
     logger.logInfo(`remoteObject:${controllerName} constructor called`);
 
     this._controllerName = controllerName;
