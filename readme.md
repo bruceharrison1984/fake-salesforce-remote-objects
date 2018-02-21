@@ -1,13 +1,19 @@
 # fake-salesforce-remote-objects
 **If you are using @RemoteActions, this package will not help you at all!**
 
-The purpose of this package is to make it easier to development Visualforce pages that make use of Salesforce Remote Objects. It is somewhat opinionated in how it expects apex DOM elements to be declared.
+The purpose of this package is to make it ~~easier~~ possible to locally develop Visualforce pages that make use of Salesforce Remote Objects. It is somewhat opinionated in how it expects apex DOM elements to be declared.
 
 - Only one jsNamespace is allowed for all `apex:remoteObject` elements
   - More than one namespace will result in an error
 - `apex:remoteObjectModel` should have their fields declared in the fields attribute, not in individual `apex:remoteObjectField`
 - `apex:remoteObjectField` are totally ignored, so if you use these you will need to refactor to us the `field` attribute of apex:remoteObjectModel
   - This was an intentional omission since I believe your field names shouldn't change between Salesforce and your frontend
+
+Currently this library is a fake of the offical remote object API, so promises are *not* supported OOTB. Unless you like callbacks, I suggest writing your own helpers to wrap these functions in promises.
+
+- [Remote Objects Primer](https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_remote_objects.htm)
+- [apex:remoteObject](https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_compref_remoteObjects.htm)
+- [apex:remoteObjectModel](https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_compref_remoteObjectModel.htm)
 
 ## installation
 ``` sh
@@ -62,3 +68,5 @@ Object names are derived in the following ways:
   - If the value was initialized during construction (`sfRemoteObject.jsContact({ someField: 'test'})`), it will be echo'd upon get
   - If the value was not initalized, it will return an empty string ('')
   - If the field *was not* declared in the apex:remoteObjectModel DOM element, an error message will be printed in the console but your code will still be allowed to run. The return value will also make note of this error.
+
+**More functions will be added as necessary**
