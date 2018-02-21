@@ -23,7 +23,7 @@ class remoteObject {
     let fakeResults = [];
     for (let i = 0; i < limit; i++) {
       fakeResults[i] = new remoteObject(
-        {...this, fakeCount: i},
+        Object.assign(this, {fakeCount: i}),
         this._sfObjectType,
         this._controllerName,
         this._definedFields
