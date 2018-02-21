@@ -1,0 +1,17 @@
+{
+  "name": "fake-salesforce-remote-objects",
+  "version": "1.0.0",
+  "description": "Library that auto-fakes apex:remoteObject DOM elements for easier local development of VisualForce pages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Salesforce",
+    "Visualforce",
+    "Remote Objects",
+    "Apex"
+  ],
+  "author": "Bruce Harrison",
+  "license": "ISC"
+}
