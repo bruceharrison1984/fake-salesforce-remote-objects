@@ -16,9 +16,7 @@ class remoteObject {
     if (limit > 100) {
       logger.logError('Salesforce only allows retrieving 100 records at a time from remote objects. You should correct this before deploying!');
     }
-    logger.logInfo(
-      `retrieving ${limit} fake records from ${this.controllerName}`
-    );
+    logger.logInfo(`retrieving ${limit} fake records from ${this._controllerName}`);
 
     let fakeResults = [];
     for (let i = 0; i < limit; i++) {
