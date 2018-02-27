@@ -8,7 +8,9 @@ class sfRemoteObject {
     for (let i = 0; i < remoteObjectModels.length; i++) {
       const remoteObjectModel = remoteObjectModels[i];
       logger.logInfo(`Setting up fake remote object - Namespace: ${jsNamespace} | SFType: '${remoteObjectModel.name}' | JsShorthand: '${remoteObjectModel.jsshorthand}' | Fields: '${remoteObjectModel.fields.join(';')}'`);
-      this[remoteObjectModel.jsshorthand] = obj => new remoteObject(obj, remoteObjectModel.name, remoteObjectModel.jsshorthand, remoteObjectModel.fields);
+      this[remoteObjectModel.jsshorthand] = function (obj) {
+        return new remoteObject(obj, remoteObjectModel.name, remoteObjectModel.jsshorthand, remoteObjectModel.fields);
+      }
     }
   }
 }
