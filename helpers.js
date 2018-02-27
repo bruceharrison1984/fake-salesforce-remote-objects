@@ -15,7 +15,7 @@ export function getRemoteObjectModel() {
   const jsObjectModelArray = Array.from(remoteObjectModelNodes, element => {
     return {
       name: element.getAttribute('name'),
-      jsshorthand: element.getAttribute('jsshorthand') || element.getAttribute('name'),
+      jsshorthand: element.getAttribute('jsshorthand') || `js${element.getAttribute('name')}`,
       fields: element.getAttribute('fields').split(',')
     };
   });
