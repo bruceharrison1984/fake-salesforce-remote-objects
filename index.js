@@ -18,9 +18,7 @@ class sfRemoteObject {
 function buildRemoteObjectController() {
   let jsNamespace = getJsNamespace();
   if (jsNamespace === undefined) {
-    logger.logDebug(`No apex:remoteObjects could be found.
-                      This typically means you have deployed fake-salesforce-remote-objects in to Salesforce.
-                      You page will work normally, but you don't need to include this library when deploying.`);
+    logger.logDebug('No apex:remoteObjects could be found.\nThis typically means you have deployed fake-salesforce-remote-objects in to Salesforce.\nYour page will work normally, but you don\'t need to include this library when deploying.');
     return;
   }
   let remoteObjectModels = getRemoteObjectModel();
