@@ -7,7 +7,7 @@ export function getJsNamespace() {
   if (jsNamespaceArray.length > 1) {
     throw new Error(`More than one namespace defined by apex:remoteobjects - ${jsNamespaceArray.join(';')}\napex:remoteobjects without jsNamespace attributes are defaulted to \'SObjectModel\'`);
   }
-  return uniqueNamespaces[0];
+  return jsNamespaceArray[0];
 }
 
 export function getRemoteObjectModel() {
