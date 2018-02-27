@@ -3,13 +3,18 @@
 
 The purpose of this package is to make it ~~easier~~ possible to locally develop Visualforce pages that make use of Salesforce Remote Objects. It is somewhat opinionated in how it expects apex DOM elements to be declared.
 
-- Only one jsNamespace is allowed for all `apex:remoteObject` elements
+- Only one jsNamespace is allowed for *all* `apex:remoteObject` elements
   - More than one namespace will result in an error
+  - If you do not define a namespace, it is set to the Salesforce default of `SObjectModel`
+    - For simplicity and brevity, it is easist to not define any namespaces and use the default
 - `apex:remoteObjectModel` should have their fields declared in the fields attribute, not in individual `apex:remoteObjectField`
+  - Objects must have at least one field declared, otherwise an error will occur
+  - Functions are automatically generated based on the Name. This is inline with the offical API
+  - If a jsShortname is declared, functions will be generated for that as well
 - `apex:remoteObjectField` are totally ignored, so if you use these you will need to refactor to us the `field` attribute of apex:remoteObjectModel
-  - This was an intentional omission since I believe your field names shouldn't change between Salesforce and your frontend
+  - This was an intentional omission, I see no point in renaming fields in your frontend (unless you really enjoy confusion)
 
-Currently this library is a fake of the offical remote object API, so promises are *not* supported OOTB. Unless you like callbacks, I suggest writing your own helpers to wrap these functions in promises.
+Since this library is a fake of the offical remote object API, promises are *not* supported OOTB(just like the real API). Unless you like callbacks, I suggest writing your own helpers to wrap these functions in promises.
 
 - [Remote Objects Primer](https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_remote_objects.htm)
 - [apex:remoteObject](https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_compref_remoteObjects.htm)
@@ -33,19 +38,15 @@ import 'fake-salesforce-remote-objects';
 
 Upon page load, the script will run and attach a remote object manager to the window under the namespace you defined. Declaring the following object:
 ``` html
-  <apex:remoteObjects jsNamespace="sfRemoteObjects">
+  <apex:remoteObjects>
     <apex:remoteObjectModel name="Contact" jsShorthand="jsContact" fields="Id, Name"></apex:remoteObjectModel>
   </apex:remoteObjects>
-
-  <apex:remoteObjects jsNamespace="sfRemoteObjects">
-    <apex:remoteObjectModel name="Account" jsShorthand="jsAccount" fields="Id, Address"></apex:remoteObjectModel>
-  </apex:remoteObjects>
 ```
-Contacts can be accessed by calling:
+Fake contacts can be be accessed locally in exactly the same way that they are accessed on a deployed Visualforce page:
 ``` javascript
     getContacts() {
-      const contactController = sfRemoteObjects.jsContact({ Id: 'test' });
-      contactController.retrieve({ limit: 101 }, (err, contacts) => {
+      const contactController = SObjectModel.jsContact({ Id: 'test' });
+      new contactController.retrieve({ limit: 101 }, (err, contacts) => {
       console.log(contacts);
         for (let i = 0; i < contacts.length; i++) {
           console.log(contacts[i].get("Id"));
@@ -54,14 +55,16 @@ Contacts can be accessed by calling:
     }
 ```
 
-**This library should not be used in a page deployed to Salesforce. It will detect that the page is in a deployed environment, throw an error, and then exit. The page will continue to run normally, but an error will be displayed in the console.**
+**This library should not be used in a page deployed to Salesforce. It will detect that the page is in a deployed environment, and print a message in the console. Your page will still work properly, but don't force your users to download things they don't need.**
 
 ## Object Names
 Object names are derived in the following ways:
 - The root remote manager is determined by what you set your `jsNamespace` attribute to in your root `apex:remoteObjects` DOM elements
+  - If you omit the jsNamespace attribute, it will be set to `SObjectModel`
   - Currently, only one namespace is allowed, more than one will intentionally throw an error
-- The `jsShorthand` name for `apex:remoteObjectModel` can be explicitly defined in the DOM element, or it is automatically derived from the `name` attribute
-  - Automatically derived shorthand names are simply `js prefixed to the name` attribute (Contact -> jsContact)
+- The `jsShorthand` name for `apex:remoteObjectModel` can be explicitly defined in the DOM element
+  - This is not required, but can be used if you choose
+  - If not defined, call the object by the Name attribute
 
 ## Fake fields
 **These fields are not part of the Salesforce spec, and they should not be referenced directly in your code.** 
