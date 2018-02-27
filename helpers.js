@@ -1,10 +1,17 @@
 export function getJsNamespace() {
   const remoteObjectNodes = document.getElementsByTagName('apex:remoteObjects');
-  const jsNamespaceArray = Array.from(remoteObjectNodes, element => element.getAttribute('jsNamespace')).filter(getUniqueValues);
-  if (jsNamespaceArray.length > 1) {
-    throw new Error(`More than one namespace defined by apex:remoteobjects - ${jsNamespaceArray.filter(getDuplicateValues).join(';')}`);
+  if (remoteObjectNodes.length) {
+    return;
   }
-  return jsNamespaceArray[0];
+  const jsNamespaceArray = Array.from(remoteObjectNodes, element => element.getAttribute('jsNamespace'));
+  if (jsNamespaceArray.length !== remoteObjectNodes.length) {
+    throw new Error('You have apex:remoteobjects DOM elements that do not have jsNamespace attributes. Add them to remove this error.')
+  }
+  const uniqueNamespaces = jsNamespaceArray.filter(getUniqueValues);
+  if (uniqueNamespaces.length > 1) {
+    throw new Error(`More than one namespace defined by apex:remoteobjects - ${uniqueNamespaces.filter(getDuplicateValues).join(';')}`);
+  }
+  return uniqueNamespaces[0];
 }
 
 export function getRemoteObjectModel() {
