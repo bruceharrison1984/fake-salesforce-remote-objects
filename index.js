@@ -10,11 +10,11 @@ class sfRemoteObject {
       logger.logInfo(`Setting up fake remote object - Namespace: ${jsNamespace} | SFType: '${remoteObjectModel.name}' | JsShorthand: '${remoteObjectModel.jsshorthand}' | Fields: '${remoteObjectModel.fields.join(';')}'`);
       this[remoteObjectModel.name] = function (obj) {
         return new remoteObject(obj, remoteObjectModel.name, remoteObjectModel.jsshorthand, remoteObjectModel.fields);
-      }
+      };
       if (remoteObjectModel.jsshorthand) {
         this[remoteObjectModel.jsshorthand] = function (obj) {
           return new remoteObject(obj, remoteObjectModel.name, remoteObjectModel.jsshorthand, remoteObjectModel.fields);
-        }
+        };
       }
     }
   }
@@ -32,4 +32,4 @@ function buildRemoteObjectController() {
 
 buildRemoteObjectController();
 
-export default sfRemoteObjects;
+export default sfRemoteObject;
