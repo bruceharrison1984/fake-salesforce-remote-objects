@@ -1,0 +1,41 @@
+env:
+  browser: true
+parserOptions:
+  ecmaVersion: 6
+  sourceType: module
+extends:
+  - eslint:recommended
+rules:
+  no-console:
+    - error
+    - allow:
+      - warn
+      - error
+      - debug
+  semi:
+    - error
+    - always
+  curly:
+    - error
+  eqeqeq:
+    - error
+    - always
+  no-multi-spaces:
+    - error
+  no-multiple-empty-lines:
+    - error
+  quotes:
+    - error
+    - single
+    - avoidEscape: true
+  eol-last:
+    - error
+    - always
+  no-unused-vars: error
+  no-trailing-spaces: error
+  space-before-function-paren: 
+    - error
+    - anonymous: always
+      named: ignore
+      asyncArrow: always
+
