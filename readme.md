@@ -6,7 +6,7 @@ The purpose of this package is to make it ~~easier~~ possible to locally develop
 - Only one jsNamespace is allowed for *all* `apex:remoteObject` elements
   - More than one namespace will result in an error
   - If you do not define a namespace, it is set to the Salesforce default of `SObjectModel`
-    - For simplicity and brevity, it is easist to not define any namespaces and use the default
+    - For simplicity and brevity, it is easiest to not define any namespaces and use the default
 - `apex:remoteObjectModel` should have their fields declared in the fields attribute, not in individual `apex:remoteObjectField`
   - Objects must have at least one field declared, otherwise an error will occur
   - Functions are automatically generated based on the Name. This is inline with the offical API
@@ -90,10 +90,11 @@ This list contains the fuctions that have been **faked** from the Salesforce Rem
   - If the value was set in code
     - The value will be returned
   - If the value was not initalized
-    - it will return an empty string ('')
-  - If the field *was not* declared in the apex:remoteObjectModel DOM element
+    - It will consistently return the same random string
+  - If the field *was not* defined in the apex:remoteObjectModel DOM element
     - an error message will be printed in the console but your code will still be allowed to run
     - The return value will also make note of this error.
+  - Each object is automatically assigned an `Id` field that is populated with a random string to simulate a Salesforce Id
 - `retrieve({ limit: 100}, callback(err, results))`
   - A number of objects equal to the limit passed in are returned
     - These objects are direct copies of the initalized object
