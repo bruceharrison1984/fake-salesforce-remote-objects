@@ -1,4 +1,6 @@
 import logger from './logger';
+import randomWords from 'random-words';
+import uuid from 'uuid/v4';
 
 class remoteObject {
   constructor(predefinedObject = {}, sfObjectType, controllerName, definedFields = []) {
@@ -8,11 +10,17 @@ class remoteObject {
     this._sfObjectType = sfObjectType;
     this._definedFields = definedFields;
 
-    definedFields.map(field => this[field] = '');
-    Object.keys(predefinedObject).map(field => this[field] = predefinedObject[field]);
+    definedFields.map(field => {
+      if (field !== 'Id') {
+        this[field] = `${randomWords()} ${randomWords()}`;
+      } else {
+        this[field] = uuid().split('-').slice(0,3).join('');
+      }
+    });
+    Object.keys(predefinedObject).map(field => (this[field] = predefinedObject[field]));
   }
 
-  retrieve({ limit = 10 }, cb) {
+  retrieve({ limit = 5 }, cb) {
     if (limit > 100) {
       logger.logError('Salesforce only allows retrieving 100 records at a time from remote objects. You should correct this before deploying!');
     }
@@ -20,12 +28,7 @@ class remoteObject {
 
     let fakeResults = [];
     for (let i = 0; i < limit; i++) {
-      fakeResults[i] = new remoteObject(
-        Object.assign(this, {fakeCount: i}),
-        this._sfObjectType,
-        this._controllerName,
-        this._definedFields
-      );
+      fakeResults[i] = new remoteObject({}, this._sfObjectType, this._controllerName, this._definedFields);
     }
     return cb(null, fakeResults);
   }
