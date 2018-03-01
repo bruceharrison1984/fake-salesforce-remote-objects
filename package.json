@@ -20,5 +20,9 @@
   },
   "devDependencies": {
     "eslint": "^4.18.1"
+  },
+  "dependencies": {
+    "random-words": "^1.0.0",
+    "uuid": "^3.2.1"
   }
 }
