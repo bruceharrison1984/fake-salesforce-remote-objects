@@ -20,11 +20,16 @@ class remoteObject {
     Object.keys(predefinedObject).map(field => (this[field] = predefinedObject[field]));
   }
 
-  retrieve({ limit = 5 }, cb) {
+  retrieve({ limit = 5, where }, cb) {
+    logger.logInfo(`retrieving ${limit} fake records from ${this._controllerName}`);
+
+    if (where) {
+      logger.logInfo(`${this._controllerName}.retrieve called with query: ${JSON.stringify(where)}`);
+    }
+
     if (limit > 100) {
       logger.logError('Salesforce only allows retrieving 100 records at a time from remote objects. You should correct this before deploying!');
     }
-    logger.logInfo(`retrieving ${limit} fake records from ${this._controllerName}`);
 
     let fakeResults = [];
     for (let i = 0; i < limit; i++) {
