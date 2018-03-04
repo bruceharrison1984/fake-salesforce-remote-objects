@@ -1,6 +1,6 @@
 import logger from './logger';
 import randomWords from 'random-words';
-import uuid from 'uuid/v4';
+import { createObjectId, removeCustomFields } from './helpers';
 
 class remoteObject {
   constructor(predefinedObject = {}, sfObjectType, controllerName, definedFields = []) {
@@ -13,8 +13,6 @@ class remoteObject {
     definedFields.map(field => {
       if (field !== 'Id') {
         this[field] = `${randomWords()} ${randomWords()}`;
-      } else {
-        this[field] = uuid().split('-').slice(0,3).join('');
       }
     });
     Object.keys(predefinedObject).map(field => (this[field] = predefinedObject[field]));
@@ -33,7 +31,14 @@ class remoteObject {
 
     let fakeResults = [];
     for (let i = 0; i < limit; i++) {
-      fakeResults[i] = new remoteObject({}, this._sfObjectType, this._controllerName, this._definedFields);
+      fakeResults[i] = new remoteObject(
+        {
+          Id: createObjectId()
+        },
+        this._sfObjectType,
+        this._controllerName,
+        this._definedFields
+      );
     }
     return cb(null, fakeResults);
   }
