@@ -4,7 +4,7 @@ import { createObjectId, removeCustomFields } from './helpers';
 
 class remoteObject {
   constructor(predefinedObject = {}, sfObjectType, controllerName, definedFields = []) {
-    logger.logInfo(`remoteObject:${controllerName} constructor called`);
+    logger.logDebug(`remoteObject:${controllerName} constructor called`);
 
     this._controllerName = controllerName;
     this._sfObjectType = sfObjectType;
@@ -49,7 +49,7 @@ class remoteObject {
       return `"${this._sfObjectType}.${fieldToRetrieve}" is not defined in apex:remoteObjectModel.`;
     }
 
-    logger.logInfo(`"${this._sfObjectType}" called with "get(${fieldToRetrieve})" return "${this[fieldToRetrieve]}"`);
+    logger.logDebug(`"${this._sfObjectType}" called with "get(${fieldToRetrieve})" return "${this[fieldToRetrieve]}"`);
     return this[fieldToRetrieve];
   }
 

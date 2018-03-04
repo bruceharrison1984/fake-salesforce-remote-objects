@@ -4,10 +4,10 @@ import { getJsNamespace, getRemoteObjectModel } from './helpers';
 
 class sfRemoteObject {
   constructor(jsNamespace, remoteObjectModels) {
-    logger.logInfo('Fake SF Remote Objects Active');
+    logger.logDebug('Fake SF Remote Objects Active');
     for (let i = 0; i < remoteObjectModels.length; i++) {
       const remoteObjectModel = remoteObjectModels[i];
-      logger.logInfo(`Setting up fake remote object - Namespace: ${jsNamespace} | SFType: '${remoteObjectModel.name}' | JsShorthand: '${remoteObjectModel.jsshorthand}' | Fields: '${remoteObjectModel.fields.join(';')}'`);
+      logger.logDebug(`Setting up fake remote object - Namespace: ${jsNamespace} | SFType: '${remoteObjectModel.name}' | JsShorthand: '${remoteObjectModel.jsshorthand}' \n Fields: ${JSON.stringify(remoteObjectModel.fields, null, 2)}`);
       this[remoteObjectModel.name] = function (obj) {
         return new remoteObject(obj, remoteObjectModel.name, remoteObjectModel.jsshorthand, remoteObjectModel.fields);
       };
