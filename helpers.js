@@ -7,7 +7,7 @@ export function getJsNamespace() {
   }
   const jsNamespaceArray = Array.from(remoteObjectNodes, element => element.getAttribute('jsNamespace') || 'SObjectModel').filter(getUniqueValues);
   if (jsNamespaceArray.length > 1) {
-    throw new Error(`More than one namespace defined by apex:remoteobjects - ${jsNamespaceArray.join(';')}\napex:remoteobjects without jsNamespace attributes are defaulted to \'SObjectModel\'`);
+    throw new Error(`More than one namespace defined by apex:remoteobjects - ${jsNamespaceArray.join(';')}\napex:remoteobjects without jsNamespace attributes are defaulted to 'SObjectModel'`);
   }
   return jsNamespaceArray[0];
 }
