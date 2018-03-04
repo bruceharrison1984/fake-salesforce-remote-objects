@@ -22,7 +22,7 @@ class remoteObject {
     logger.logInfo(`retrieving ${limit} fake records from ${this._controllerName}`);
 
     if (where) {
-      logger.logInfo(`${this._controllerName}.retrieve called with query: ${JSON.stringify(where)}`);
+      logger.logInfo(`${this._controllerName}.retrieve called with query: ${JSON.stringify(where, null, 2)}`);
     }
 
     if (limit > 100) {
@@ -53,8 +53,49 @@ class remoteObject {
     return this[fieldToRetrieve];
   }
 
-  create() {
-    logger.logError('Not implemented');
+  create(argOne, argTwo) {
+    if (!argOne && !argTwo) {
+      logger.logInfo(`Inserting ${this._sfObjectType} record in to Salesforce without callback:\n${JSON.stringify(removeCustomFields(this), null, 2)}`);
+      this.Id = createObjectId();
+    }
+    if (typeof argOne === 'function') {
+      logger.logInfo(`Inserting ${this._sfObjectType} record in to Salesforce with callback:\n${JSON.stringify(removeCustomFields(this), null, 2)}`);
+      this.Id = createObjectId();
+      return argOne();
+    }
+    if (argOne && argTwo) {
+      if (argOne.Id) {
+        logger.logError(`Inserting ${this._sfObjectType} record failed. Cannot have Id field when creating record`);
+      }
+      logger.logInfo(`Inserting ${this._sfObjectType} record in to Salesforce with callback: ${JSON.stringify(argOne, null, 2)}`);
+      this.Id = createObjectId();
+      return argTwo();
+    }
+    logger.logError(`Inserting ${this._sfObjectType} record failed. First argument must either be a function or an object, second argument can only be a function`);
+  }
+
+  update(argOne, argTwo) {
+    if (!argOne && !argTwo) {
+      if (!this.Id || this.Id === '') {
+        logger.logError(`Updating ${this._sfObjectType} record failed. Id must be specified.`);
+      }
+      logger.logInfo(`Updating ${this._sfObjectType} record in to Salesforce without callback:\n${JSON.stringify(removeCustomFields(this), null, 2)}`);
+    }
+    if (typeof argOne === 'function') {
+      if (!this.Id || this.Id === '') {
+        logger.logError(`Updating ${this._sfObjectType} record failed. Id must be specified.`);
+      }
+      logger.logInfo(`Updating ${this._sfObjectType} record in to Salesforce with callback:\n${JSON.stringify(removeCustomFields(this), null, 2)}`);
+      return argOne();
+    }
+    if (argOne && argTwo) {
+      if (!argOne.Id || argOne.Id === '') {
+        logger.logError(`Updating ${this._sfObjectType} record failed. Id must be specified.`);
+      }
+      logger.logInfo(`Updating ${this._sfObjectType} record in to Salesforce with callback: ${JSON.stringify(argOne, null, 2)}`);
+      return argTwo();
+    }
+    logger.logError(`Updating ${this._sfObjectType} record failed. First argument must either be a function or an object, second argument can only be a function`);
   }
 }
 
