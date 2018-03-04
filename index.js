@@ -1,6 +1,6 @@
-import remoteObject from './remoteObject';
-import logger from './logger';
-import { getJsNamespace, getRemoteObjectModel } from './helpers';
+import remoteObject from './src/remoteObject';
+import logger from './src/logger';
+import { getJsNamespace, getRemoteObjectModel } from './src/helpers';
 
 class sfRemoteObject {
   constructor(jsNamespace, remoteObjectModels) {

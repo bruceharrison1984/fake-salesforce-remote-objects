@@ -1,6 +1,6 @@
 {
   "name": "fake-salesforce-remote-objects",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Library that auto-fakes the Salesforce Remote Object API based on apex:remoteObject DOM elements in the page. For use in local development.",
   "main": "index.js",
   "scripts": {
@@ -24,5 +24,9 @@
   "dependencies": {
     "random-words": "^1.0.0",
     "uuid": "^3.2.1"
-  }
+  },
+  "files": [
+    "index.js",
+    "src/"
+  ]
 }
