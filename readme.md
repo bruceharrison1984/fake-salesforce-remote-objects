@@ -87,6 +87,11 @@ These fields are added to any fake objects created. They simply exist to make lo
 - `_predefinedObject`
   - If you initalized the object with values, the original values will be stored here
   - Field won't exist if initialized without values
+- `_values`
+  - When initializing objects, values are stored here
+  - This is to accurately reflect the Salesforce API, which doesn't attach properties directly to the object
+    - Use the `get` method to retrieve values from this store
+    - Values should never be directly accessed through this property
 
 ## Fake Object functions
 This list contains the fuctions that have been **faked** from the Salesforce Remote Object API. It probably won't ever contain all of the possible functions, just the most frequently used ones. Console messages are used extensively so you can follow your API calls during development.
@@ -104,6 +109,7 @@ This list contains the fuctions that have been **faked** from the Salesforce Rem
   - If the field *was not* defined in the apex:remoteObjectModel DOM element
     - an error message will be printed in the console but your code will still be allowed to run
     - The return value will also make note of this error.
+  - Values are stored in the `_values` property on the object, but you should only access them through this method
 - `retrieve({ limit: 100, where: {} }, callback(err, results))`
   - Only the callback format of this function is supported
   - Each returned object is automatically assigned an `Id` field that is populated with a random string to simulate a Salesforce Id

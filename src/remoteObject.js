@@ -11,6 +11,7 @@ class remoteObject {
 
     this._sfObjectType = sfObjectType;
     this._definedFields = definedFields;
+    this._values = {};
 
     if (shorthandName) {
       this._shorthandName = shorthandName;
@@ -22,10 +23,11 @@ class remoteObject {
 
     this._definedFields.map(field => {
       if (field !== 'Id') {
-        this[field] = `${randomWords()} ${randomWords()}`;
+        this._values[field] = `${randomWords()} ${randomWords()}`;
       }
     });
-    Object.keys(this._predefinedObject).map(field => (this[field] = this._predefinedObject[field]));
+    Object.keys(this._predefinedObject).map(field => (this._values[field] = this._predefinedObject[field]));
+    console.log(this);
   }
 
   retrieve(query, callback) {
