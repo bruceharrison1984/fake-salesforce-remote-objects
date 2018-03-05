@@ -68,15 +68,25 @@ Object names are derived in the following ways:
 
 ## Fake fields
 **These fields are not part of the Salesforce spec, and they should not be referenced directly in your code.** 
+### RemoteObject
+These fields are added to the window level Remote Object
+- `_jsNamespace`
+  - The namespace that the Remote Object was assigned to via jsNamespace
+- `_remoteObjectModels`
+  - The available models as defined on the page through apex:remoteobjectmodel DOM elements
 
+### RemoteObjectModel
 These fields are added to any fake objects created. They simply exist to make local development easier and help you keep track of objects.
-
 - `_sfObjectType`
   - The Salesforce Object Type declared in the apex:remoteObjectModel
 - `_shorthandName`
-  - The shorthand name (if defined)
+  - The jsShorthand name
+  - Field won't exist if jsShorthand wasn't used
 - `_fakeCount`
   - When doing a query or retrieval, this field keeps count of the returned objects
+- `_predefinedObject`
+  - If you initalized the object with values, the original values will be stored here
+  - Field won't exist if initialized without values
 
 ## Fake Object functions
 This list contains the fuctions that have been **faked** from the Salesforce Remote Object API. It probably won't ever contain all of the possible functions, just the most frequently used ones. Console messages are used extensively so you can follow your API calls during development.
