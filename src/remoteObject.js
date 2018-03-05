@@ -27,7 +27,6 @@ class remoteObject {
       }
     });
     Object.keys(this._predefinedObject).map(field => (this._values[field] = this._predefinedObject[field]));
-    console.log(this);
   }
 
   retrieve(query, callback) {
