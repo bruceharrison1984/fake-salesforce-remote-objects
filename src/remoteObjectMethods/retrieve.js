@@ -20,9 +20,11 @@ export default function retrieve({ limit = 5, where }, callback, remoteObject) {
       {
         Id: createObjectId()
       },
-      _remoteObject._sfObjectType,
-      _remoteObject._shorthandName,
-      _remoteObject._definedFields
+      {
+        sfObjectType: _remoteObject._sfObjectType,
+        shorthandName: _remoteObject._shorthandName,
+        definedFields: _remoteObject._definedFields
+      }
     );
   }
   return callback(null, fakeResults);

@@ -6,19 +6,20 @@ import getRemoteObjectValue from './remoteObjectMethods/get';
 import retrieveRemoteObject from './remoteObjectMethods/retrieve';
 
 class remoteObject {
-  constructor(predefinedObject = {}, sfObjectType, shorthandName, definedFields = []) {
+  constructor(predefinedObject = {}, { sfObjectType, shorthandName, definedFields = [] }) {
     logger.logDebug(`remoteObject:${shorthandName} constructor called`);
 
-    this._shorthandName = shorthandName;
     this._sfObjectType = sfObjectType;
+    this._shorthandName = shorthandName;
     this._definedFields = definedFields;
+    this._predefinedObject = predefinedObject;
 
-    definedFields.map(field => {
+    this._definedFields.map(field => {
       if (field !== 'Id') {
         this[field] = `${randomWords()} ${randomWords()}`;
       }
     });
-    Object.keys(predefinedObject).map(field => (this[field] = predefinedObject[field]));
+    Object.keys(this._predefinedObject).map(field => (this[field] = this._predefinedObject[field]));
   }
 
   retrieve(query, callback) {

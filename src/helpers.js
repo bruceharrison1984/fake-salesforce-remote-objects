@@ -42,19 +42,19 @@ export function getRemoteObjectModel() {
   const remoteObjectModelNodes = document.getElementsByTagName('apex:remoteobjectmodel');
   const jsObjectModelArray = Array.from(remoteObjectModelNodes, element => {
     return {
-      name: element.getAttribute('name'),
-      jsshorthand: element.getAttribute('jsshorthand'),
-      fields: element
+      sfObjectType: element.getAttribute('name'),
+      shorthandName: element.getAttribute('jsshorthand'),
+      definedFields: element
         .getAttribute('fields')
         .split(',')
         .filter(x => x !== '')
     };
   });
-  const objectsWithNoFields = jsObjectModelArray.filter(x => x.fields.length === 0);
+  const objectsWithNoFields = jsObjectModelArray.filter(x => x.definedFields.length === 0);
   if (objectsWithNoFields.length) {
-    throw new Error(`apex:remoteobjectmodel doesn't have any fields defined: ${objectsWithNoFields.map(x => x.name).join(';')}`);
+    throw new Error(`apex:remoteobjectmodel doesn't have any fields defined: ${objectsWithNoFields.map(x => x.sfObjectType).join(';')}`);
   }
-  const jsShorthandNames = jsObjectModelArray.map(x => x.jsshorthand.trim());
+  const jsShorthandNames = jsObjectModelArray.map(x => x.shorthandName.trim());
   if (jsShorthandNames.filter(getUniqueValues).length < jsObjectModelArray.length) {
     throw new Error(`JsShorthand name used more than once: ${jsShorthandNames.filter(getDuplicateValues).join(';')}`);
   }
