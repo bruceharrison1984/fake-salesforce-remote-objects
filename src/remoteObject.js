@@ -6,10 +6,10 @@ import getRemoteObjectValue from './remoteObjectMethods/get';
 import retrieveRemoteObject from './remoteObjectMethods/retrieve';
 
 class remoteObject {
-  constructor(predefinedObject = {}, sfObjectType, controllerName, definedFields = []) {
-    logger.logDebug(`remoteObject:${controllerName} constructor called`);
+  constructor(predefinedObject = {}, sfObjectType, shorthandName, definedFields = []) {
+    logger.logDebug(`remoteObject:${shorthandName} constructor called`);
 
-    this._controllerName = controllerName;
+    this._shorthandName = shorthandName;
     this._sfObjectType = sfObjectType;
     this._definedFields = definedFields;
 

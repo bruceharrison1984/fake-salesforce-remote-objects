@@ -73,8 +73,8 @@ These fields are added to any fake objects created. They simply exist to make lo
 
 - `_sfObjectType`
   - The Salesforce Object Type declared in the apex:remoteObjectModel
-- `_controllerName`
-  - The name of the function that created this object
+- `_shorthandName`
+  - The shorthand name (if defined)
 - `_fakeCount`
   - When doing a query or retrieval, this field keeps count of the returned objects
 
