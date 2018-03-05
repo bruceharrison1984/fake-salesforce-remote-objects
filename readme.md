@@ -45,12 +45,24 @@ Upon page load, the script will run and attach a remote object manager to the wi
 Fake contacts can be be accessed locally in exactly the same way that they are accessed on a deployed Visualforce page:
 ``` javascript
     getContacts() {
-      const contactController = SObjectModel.jsContact({ Id: 'test' });
-      new contactController.retrieve({ limit: 101 }, (err, contacts) => {
+      const contact = SObjectModel.jsContact();
+      new contact.retrieve({ limit: 101 }, (err, contacts) => {
       console.log(contacts);
         for (let i = 0; i < contacts.length; i++) {
           console.log(contacts[i].get("Id"));
         }
+        return;
+      });
+    }
+    createContact() {
+      const contact = SObjectModel.jsContact();
+      new contact.create({ LastName: 'some_dude' }, (err) => {
+        if(err){
+          console.log(err);
+          return;
+        }
+        console.log('Good job, you inserted a contact!');
+        return;
       });
     }
 ```
