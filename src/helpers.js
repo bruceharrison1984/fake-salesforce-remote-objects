@@ -34,7 +34,7 @@ export function createObjectId() {
 
 export function removeCustomFields(obj) {
   let newObject = {};
-  Object.keys(obj).filter(field => field.indexOf('_') !== 0).map(field => newObject[field] = obj[field]);
+  Object.keys(obj._values).filter(field => field.indexOf('_') !== 0).map(field => newObject[field] = obj._values[field]);
   return newObject;
 }
 
