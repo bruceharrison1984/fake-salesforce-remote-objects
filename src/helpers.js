@@ -12,6 +12,19 @@ export function getJsNamespace() {
   return jsNamespaceArray[0];
 }
 
+export function hasCallback(argOne, argTwo) {
+  if (!argOne && !argTwo) {
+    return 'NoCallback';
+  }
+  if (typeof argOne === 'function') {
+    return 'CallbackWithoutValues';
+    }
+  if (argOne && argTwo) {
+    return 'CallbackWithValues';
+  }
+  return 'Error';
+}
+
 export function createObjectId() {
   return uuid()
     .split('-')
