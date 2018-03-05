@@ -10,9 +10,15 @@ class remoteObject {
     logger.logDebug(`remoteObject:${shorthandName} constructor called`);
 
     this._sfObjectType = sfObjectType;
-    this._shorthandName = shorthandName;
     this._definedFields = definedFields;
-    this._predefinedObject = predefinedObject;
+
+    if (shorthandName) {
+      this._shorthandName = shorthandName;
+    }
+
+    if (predefinedObject) {
+      this._predefinedObject = predefinedObject;
+    }
 
     this._definedFields.map(field => {
       if (field !== 'Id') {
