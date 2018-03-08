@@ -6,7 +6,7 @@ class sfRemoteObject {
   constructor() {
     this._jsNamespace = getJsNamespace();
     if (this._jsNamespace === undefined) {
-      logger.logDebug('No apex:remoteObjects could be found.\nThis typically means you have deployed fake-salesforce-remote-objects in to Salesforce.\nYour page will work normally, but you don\'t need to include this library when deploying.');
+      logger.logDebug('No apex:remoteObjects could be found in DOM. Add them to your page to begin using fake-salesforce-remote-objects');
       return;
     }
     this._remoteObjectModels = getRemoteObjectModel();
@@ -24,11 +24,14 @@ class sfRemoteObject {
         };
       }
     }
-
     window[this._jsNamespace] = this;
   }
 }
 
-new sfRemoteObject();
+if (window.location.hostname.indexOf('force.com') > -1) {
+  logger.logDebug('force.com domain detected, disabling fake-salesforce-remote-objects. You should remove this dependency when deploying!');
+} else {
+  new sfRemoteObject();
+}
 
 export default sfRemoteObject;
