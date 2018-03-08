@@ -1,6 +1,7 @@
 import remoteObject from './src/remoteObject';
 import logger from './src/logger';
 import { getJsNamespace, getRemoteObjectModel } from './src/helpers';
+import Configuration from './src/configuration';
 
 class sfRemoteObject {
   constructor() {
@@ -11,10 +12,10 @@ class sfRemoteObject {
     }
     this._remoteObjectModels = getRemoteObjectModel();
 
-    logger.logDebug('Fake SF Remote Objects Active');
+    logger.logInfo('Fake SF Remote Objects Active');
     for (let i = 0; i < this._remoteObjectModels.length; i++) {
       const remoteObjectModel = this._remoteObjectModels[i];
-      logger.logDebug(`Setting up fake remote object - Namespace: ${this._jsNamespace} | SFType: '${remoteObjectModel.sfObjectType}' | JsShorthand: '${remoteObjectModel.shorthandName}' \n Fields: ${JSON.stringify(remoteObjectModel.definedFields, null, 2)}`);
+      logger.logInfo(`Setting up fake remote object - Namespace: ${this._jsNamespace} | SFType: '${remoteObjectModel.sfObjectType}' | JsShorthand: '${remoteObjectModel.shorthandName}' \n Fields: ${JSON.stringify(remoteObjectModel.definedFields, null, 2)}`);
       this[remoteObjectModel.sfObjectType] = function (obj) {
         return new remoteObject(obj, remoteObjectModel);
       };
@@ -31,6 +32,7 @@ class sfRemoteObject {
 if (window.location.hostname.indexOf('force.com') > -1) {
   logger.logDebug('force.com domain detected, disabling fake-salesforce-remote-objects. You should remove this dependency when deploying!');
 } else {
+  window.fakeRemoteConfig = new Configuration();
   new sfRemoteObject();
 }
 

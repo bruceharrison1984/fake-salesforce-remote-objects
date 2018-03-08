@@ -1,11 +1,15 @@
 class logger{
 
   static logInfo(message) {
-    console.debug(`%c [INFO] ${message}`, 'color: green; font-weight:bold;');
+    if (window.fakeRemoteConfig.debugLevel > 0) {
+      console.debug(`%c [INFO] ${message}`, 'color: green; font-weight:bold;');
+    }
   }
 
   static logDebug(message) {
-    console.debug(`%c [DEBUG] ${message}`, 'color: darkblue; font-weight:bold;');
+    if (window.fakeRemoteConfig.debugLevel > 1) {
+      console.debug(`%c [DEBUG] ${message}`, 'color: darkblue; font-weight:bold;');
+    }
   }
 
   static logError(message) {
