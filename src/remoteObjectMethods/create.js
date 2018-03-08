@@ -13,8 +13,7 @@ export default function create(argOne, argTwo, remoteObject) {
 
 function noCallback(_remoteObject) {
   logger.logInfo(`Inserting ${_remoteObject._sfObjectType} record in to Salesforce without callback:\n${JSON.stringify(removeCustomFields(_remoteObject), null, 2)}`);
-  _remoteObject.Id = createObjectId();
-  return _remoteObject;
+  _remoteObject._values['Id'] = createObjectId();
 }
 
 function callbackWithoutValues(callback, _remoteObject) {
