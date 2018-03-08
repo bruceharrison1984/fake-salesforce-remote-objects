@@ -22,7 +22,7 @@ function callbackWithoutValues(callback, _remoteObject) {
   }
   logger.logInfo(`Inserting ${_remoteObject._sfObjectType} record in to Salesforce with callback:\n${JSON.stringify(removeCustomFields(_remoteObject), null, 2)}`);
   _remoteObject._values['Id'] = createObjectId();
-  return callback();
+  return callback(null, [_remoteObject._values['Id']]);
 }
 
 function callbackWithValues(values, callback, _remoteObject) {
@@ -31,7 +31,7 @@ function callbackWithValues(values, callback, _remoteObject) {
   }
   logger.logInfo(`Inserting ${_remoteObject._sfObjectType} record in to Salesforce with callback: ${JSON.stringify(values, null, 2)}`);
   _remoteObject._values['Id'] = createObjectId();
-  return callback();
+  return callback(null, [ _remoteObject._values['Id'] ]);
 }
 
 function error(_remoteObject) {
