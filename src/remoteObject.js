@@ -3,6 +3,7 @@ import randomWords from 'random-words';
 import updateRemoteObject from './remoteObjectMethods/update';
 import createRemoteObject from './remoteObjectMethods/create';
 import getRemoteObjectValue from './remoteObjectMethods/get';
+import setRemoteObjectValue from './remoteObjectMethods/set';
 import retrieveRemoteObject from './remoteObjectMethods/retrieve';
 
 class remoteObject {
@@ -35,6 +36,10 @@ class remoteObject {
 
   get(fieldToRetrieve) {
     return getRemoteObjectValue(fieldToRetrieve, this);
+  }
+
+  set(fieldToSet, value) {
+    setRemoteObjectValue(fieldToSet ,value, this);
   }
 
   create(argOne, argTwo) {
