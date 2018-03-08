@@ -18,8 +18,11 @@ function noCallback(_remoteObject) {
 }
 
 function callbackWithoutValues(callback, _remoteObject) {
+  if (_remoteObject._values['Id']) {
+    logger.logError(`Creating ${_remoteObject._sfObjectType} record failed. Id cannot be specified.`);
+  }
   logger.logInfo(`Inserting ${_remoteObject._sfObjectType} record in to Salesforce with callback:\n${JSON.stringify(removeCustomFields(_remoteObject), null, 2)}`);
-  _remoteObject.Id = createObjectId();
+  _remoteObject._values['Id'] = createObjectId();
   return callback();
 }
 
@@ -28,7 +31,7 @@ function callbackWithValues(values, callback, _remoteObject) {
     logger.logError(`Inserting ${_remoteObject._sfObjectType} record failed. Cannot have Id field when creating record`);
   }
   logger.logInfo(`Inserting ${_remoteObject._sfObjectType} record in to Salesforce with callback: ${JSON.stringify(values, null, 2)}`);
-  _remoteObject.Id = createObjectId();
+  _remoteObject._values['Id'] = createObjectId();
   return callback();
 }
 
