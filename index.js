@@ -14,7 +14,7 @@ class sfRemoteObject {
     logger.logDebug('Fake SF Remote Objects Active');
     for (let i = 0; i < this._remoteObjectModels.length; i++) {
       const remoteObjectModel = this._remoteObjectModels[i];
-      logger.logDebug(`Setting up fake remote object - Namespace: ${this.jsNamespace} | SFType: '${remoteObjectModel.sfObjectType}' | JsShorthand: '${remoteObjectModel.shorthandName}' \n Fields: ${JSON.stringify(remoteObjectModel.definedFields, null, 2)}`);
+      logger.logDebug(`Setting up fake remote object - Namespace: ${this._jsNamespace} | SFType: '${remoteObjectModel.sfObjectType}' | JsShorthand: '${remoteObjectModel.shorthandName}' \n Fields: ${JSON.stringify(remoteObjectModel.definedFields, null, 2)}`);
       this[remoteObjectModel.sfObjectType] = function (obj) {
         return new remoteObject(obj, remoteObjectModel);
       };
