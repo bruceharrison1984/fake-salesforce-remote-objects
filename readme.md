@@ -46,7 +46,7 @@ Fake contacts can be be accessed locally in exactly the same way that they are a
 ``` javascript
     getContacts() {
       const contact = SObjectModel.jsContact();
-      new contact.retrieve({ limit: 101 }, (err, contacts) => {
+      new contact.retrieve({ limit: 10 }, (err, contacts) => {
       console.log(contacts);
         for (let i = 0; i < contacts.length; i++) {
           console.log(contacts[i].get("Id"));
