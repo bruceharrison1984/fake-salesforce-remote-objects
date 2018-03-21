@@ -11,7 +11,6 @@ class sfRemoteObject {
       return;
     }
     this._remoteObjectModels = getRemoteObjectModel();
-
     logger.logInfo('Fake SF Remote Objects Active');
     for (let i = 0; i < this._remoteObjectModels.length; i++) {
       const remoteObjectModel = this._remoteObjectModels[i];
@@ -30,7 +29,7 @@ class sfRemoteObject {
 }
 
 if (window.location.hostname.indexOf('force.com') > -1) {
-  logger.logDebug('force.com domain detected, disabling fake-salesforce-remote-objects. You should remove this dependency when deploying!');
+  console.error('force.com domain detected, disabling fake-salesforce-remote-objects. You should remove this dependency when deploying!');
 } else {
   window.fakeRemoteConfig = new Configuration();
   new sfRemoteObject();
