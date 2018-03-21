@@ -31,23 +31,33 @@ class remoteObject {
   }
 
   retrieve(query, callback) {
-    return retrieveRemoteObject(query, callback, this);
+    this._delay().then(() => {
+      return retrieveRemoteObject(query, callback, this);
+    });
   }
 
   get(fieldToRetrieve) {
-    return getRemoteObjectValue(fieldToRetrieve, this);
+      return getRemoteObjectValue(fieldToRetrieve, this);
   }
 
   set(fieldToSet, value) {
-    setRemoteObjectValue(fieldToSet ,value, this);
+      return setRemoteObjectValue(fieldToSet, value, this);
   }
 
   create(argOne, argTwo) {
-    return createRemoteObject(argOne, argTwo, this);
+    this._delay().then(() => {
+      return createRemoteObject(argOne, argTwo, this);
+    });
   }
 
   update(argOne, argTwo) {
-    return updateRemoteObject(argOne, argTwo, this);
+    this._delay().then(() => {
+      return updateRemoteObject(argOne, argTwo, this);
+    });
+  }
+
+  _delay() {
+    return new Promise(resolve => setTimeout(resolve, window.fakeRemoteConfig.requestDelay));
   }
 }
 
