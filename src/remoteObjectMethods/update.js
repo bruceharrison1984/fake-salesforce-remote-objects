@@ -1,13 +1,20 @@
 import logger from '../logger';
-import { hasCallback, removeCustomFields } from '../helpers';
+import {
+  hasCallback,
+  removeCustomFields
+} from '../helpers';
 
 export default function updateRemoteObject(argOne, argTwo, remoteObject) {
   let _remoteObject = remoteObject;
   switch (hasCallback(argOne, argTwo)) {
-    case 'NoCallback': return noCallback(_remoteObject);
-    case 'CallbackWithoutValues': return callbackWithoutValues(argOne, _remoteObject);
-    case 'CallbackWithValues': return callbackWithValues(argOne, argTwo, _remoteObject);
-    case 'Error': return error(_remoteObject);
+    case 'NoCallback':
+      return noCallback(_remoteObject);
+    case 'CallbackWithoutValues':
+      return callbackWithoutValues(argOne, _remoteObject);
+    case 'CallbackWithValues':
+      return callbackWithValues(argOne, argTwo, _remoteObject);
+    case 'Error':
+      return error(_remoteObject);
   }
 }
 
@@ -23,7 +30,10 @@ function callbackWithoutValues(callback, _remoteObject) {
     logger.logError(`Updating ${_remoteObject._sfObjectType} record failed. Id must be specified.`);
   }
   logger.logInfo(`Updating ${_remoteObject._sfObjectType} record in to Salesforce with callback:\n${JSON.stringify(removeCustomFields(_remoteObject), null, 2)}`);
-  return callback(null, [ _remoteObject._values['Id'] ]);
+  if (window.fakeRemoteConfig.errors.update) {
+    return callback('Forced error on update method');
+  }
+  return callback(null, [_remoteObject._values['Id']]);
 }
 
 function callbackWithValues(values, callback, _remoteObject) {
@@ -31,7 +41,10 @@ function callbackWithValues(values, callback, _remoteObject) {
     logger.logError(`Updating ${_remoteObject._sfObjectType} record failed. Id must be specified.`);
   }
   logger.logInfo(`Updating ${_remoteObject._sfObjectType} record in to Salesforce with callback: ${JSON.stringify(values, null, 2)}`);
-  return callback(null, [ _remoteObject._values['Id'] ]);
+  if (window.fakeRemoteConfig.errors.update) {
+    return callback('Forced error on update method');
+  }
+  return callback(null, [_remoteObject._values['Id']]);
 }
 
 function error(_remoteObject) {

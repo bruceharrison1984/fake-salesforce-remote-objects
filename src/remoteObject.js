@@ -7,7 +7,11 @@ import setRemoteObjectValue from './remoteObjectMethods/set';
 import retrieveRemoteObject from './remoteObjectMethods/retrieve';
 
 class remoteObject {
-  constructor(predefinedObject = {}, { sfObjectType, shorthandName, definedFields = [] }) {
+  constructor(predefinedObject = {}, {
+    sfObjectType,
+    shorthandName,
+    definedFields = []
+  }) {
     logger.logDebug(`remoteObject:${shorthandName} constructor called`);
 
     this._sfObjectType = sfObjectType;
@@ -31,29 +35,23 @@ class remoteObject {
   }
 
   retrieve(query, callback) {
-    this._delay().then(() => {
-      return retrieveRemoteObject(query, callback, this);
-    });
-  }
-
-  get(fieldToRetrieve) {
-      return getRemoteObjectValue(fieldToRetrieve, this);
-  }
-
-  set(fieldToSet, value) {
-      return setRemoteObjectValue(fieldToSet, value, this);
+    return this._delay().then(retrieveRemoteObject(query, callback, this));
   }
 
   create(argOne, argTwo) {
-    this._delay().then(() => {
-      return createRemoteObject(argOne, argTwo, this);
-    });
+    return this._delay().then(createRemoteObject(argOne, argTwo, this));
   }
 
   update(argOne, argTwo) {
-    this._delay().then(() => {
-      return updateRemoteObject(argOne, argTwo, this);
-    });
+    return this._delay().then(updateRemoteObject(argOne, argTwo, this));
+  }
+
+  get(fieldToRetrieve) {
+    return getRemoteObjectValue(fieldToRetrieve, this);
+  }
+
+  set(fieldToSet, value) {
+    return setRemoteObjectValue(fieldToSet, value, this);
   }
 
   _delay() {
