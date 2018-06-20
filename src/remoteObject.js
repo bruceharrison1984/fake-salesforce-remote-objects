@@ -35,15 +35,21 @@ class remoteObject {
   }
 
   retrieve(query, callback) {
-    return this._delay().then(retrieveRemoteObject(query, callback, this));
+    this._delay().then(() => {
+      return retrieveRemoteObject(query, callback, this);
+    });
   }
 
   create(argOne, argTwo) {
-    return this._delay().then(createRemoteObject(argOne, argTwo, this));
+    this._delay().then(() => {
+      return createRemoteObject(argOne, argTwo, this);
+    });
   }
 
   update(argOne, argTwo) {
-    return this._delay().then(updateRemoteObject(argOne, argTwo, this));
+    this._delay().then(() => {
+      return updateRemoteObject(argOne, argTwo, this);
+    });
   }
 
   get(fieldToRetrieve) {
