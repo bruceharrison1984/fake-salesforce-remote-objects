@@ -1,10 +1,16 @@
 env:
   browser: true
 parserOptions:
-  ecmaVersion: 6
+  ecmaVersion: 2017
   sourceType: module
+  ecmaFeatures:
+    jsx: true
 extends:
   - eslint:recommended
+globals:
+  require: true
+  __dirname: true
+  sfRemoteObjects: true
 rules:
   no-console:
     - error
